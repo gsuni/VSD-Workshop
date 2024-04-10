@@ -1,7 +1,10 @@
-![17](https://github.com/gsuni/VSD-Workshop/assets/99734954/1337ce6f-2dca-4e37-993f-e425f3d8a7e3)# VSD-Workshop
-
 
 Day-1 Inception of open source,EDA Openlane and Sky130 PDK
+
+Design prearation steps
+
+![Screenshot (157)](https://github.com/gsuni/VSD-Workshop/assets/99734954/3f129397-8035-4e0d-a4a2-7fedaf35c43c)
+
 ##Using following command to invoke openlane:<br>
 ```bash
 docker
@@ -9,7 +12,11 @@ docker
 package require openlane 0.9
 prep -design picorv32a
 ```
-![1](https://github.com/gsuni/VSD-Workshop/assets/99734954/f944fc9f-4ade-4ba7-806b-486422802fee)
+
+![Screenshot (158)](https://github.com/gsuni/VSD-Workshop/assets/99734954/eb83edda-7f7e-4c43-86ac-e49be8be3847)
+
+![Screenshot (159)](https://github.com/gsuni/VSD-Workshop/assets/99734954/1d7dafbe-dc84-4911-ba56-2bf59ac288f7)
+
 ### Synthesis
    
  To run the Synthesis
@@ -17,15 +24,28 @@ prep -design picorv32a
     ```bash
        run_synthesis
     ```
-![2](https://github.com/gsuni/VSD-Workshop/assets/99734954/4f9bdf6b-8829-461a-8e80-896f4a387fd9)
+![Screenshot (160)](https://github.com/gsuni/VSD-Workshop/assets/99734954/de46dc11-5e5a-4438-a84d-02ca58fac170)
+
+
+![Screenshot (161)](https://github.com/gsuni/VSD-Workshop/assets/99734954/44979009-ecea-4b7e-bc88-911e187fa7c4)
+
+to check wheather the synthesis is donr or not:
+
+```bash
+openlane/design/picorv32a/runs/ls -lts/date/results
+```
+
+![Screenshot (162)](https://github.com/gsuni/VSD-Workshop/assets/99734954/5dca5a03-b0ba-4247-94be-ee00322f56d9)
+
 
 #To calculate the  flip-flop ratio
 
-![3](https://github.com/gsuni/VSD-Workshop/assets/99734954/b6a9d016-a720-4d1b-9e0f-7d7f0957fa1c)
+![Screenshot (163)](https://github.com/gsuni/VSD-Workshop/assets/99734954/5c745f0c-7b3d-497c-b1fa-6f6287167556)
 
-![4](https://github.com/gsuni/VSD-Workshop/assets/99734954/0356851d-795d-4464-8541-aa732038f6ca)
 
-we are interested in finding the Flop ratio. This can be calculated by using the formula:
+![Screenshot (164)](https://github.com/gsuni/VSD-Workshop/assets/99734954/bedf7494-f007-43e1-9e20-928a9239d23a)
+
+
    
        Flop Ratio = No. of D FlipfLops/Total No. of cells
       
@@ -34,6 +54,7 @@ we are interested in finding the Flop ratio. This can be calculated by using the
                    =0.10842
       
         Percentage of D FF's = 10.842%
+        
 
  ## Day2 Good floorplan vs bad floorplan and introduction to library cells
    
