@@ -64,10 +64,26 @@ openlane/design/picorv32a/runs/ls -lts/date/results
   run_floorplan
 ```
 
-![5](https://github.com/gsuni/VSD-Workshop/assets/99734954/a3af31bb-996d-4af2-a1f9-b8e4d2f79592)
+![Screenshot (166)](https://github.com/gsuni/VSD-Workshop/assets/99734954/c5952dd2-3796-4b72-8454-5a57751f46bf)
 
-![6](https://github.com/gsuni/VSD-Workshop/assets/99734954/cd46191b-a955-4fbf-92fd-471ed614aacf)
 
+![Screenshot (168)](https://github.com/gsuni/VSD-Workshop/assets/99734954/6b314092-168d-42c8-b85b-dc3becb4cdc1)
+
+if you encounter error while executing the floorplanning 
+
+![Screenshot (165)](https://github.com/gsuni/VSD-Workshop/assets/99734954/b76a209f-759a-47d1-831f-00530647dc5b)
+
+- Press 'Esc' to enter command mode.
+- While in command mode press 'i' to enter edit mode and then type the code which is given below.
+- After editing is done press 'Esc' to once again enter command mode.
+- Now type ':wq' and press enter to save and exit from file.
+
+```bash
+set ::env(CLOCK_NET) $::env(CLOCK_PORT)
+set ::env(FP_CORE_UTIL) 65
+set ::env(FP_IO_VMETAL) 4
+set ::env(FP_IO_HMETAL) 3
+```
 
 To see the actual layout after the flow, we have to open the magic file by adding the command
 
