@@ -92,19 +92,20 @@ magic -T /home/vsdsquadron/Desktop/work/tools/openlane_working_dir/pdks/sky130A/
   read ../../tmp/merged.lef def read picorv32a.floorplan.def &
 ```
 
-![7](https://github.com/gsuni/VSD-Workshop/assets/99734954/36f44956-6797-4eef-bd8d-43a2eff44cb2)
+![Screenshot (173)](https://github.com/gsuni/VSD-Workshop/assets/99734954/7ab28271-ffc4-4cf2-b261-a9e1f4072ebf)
 
-![8](https://github.com/gsuni/VSD-Workshop/assets/99734954/e79bcaec-38c1-43c8-9c7b-92ce02d9b517)
 
-![9](https://github.com/gsuni/VSD-Workshop/assets/99734954/1ce70a1a-e075-4ec7-8fbc-772dfc9db852)
+![Screenshot (172)](https://github.com/gsuni/VSD-Workshop/assets/99734954/dbc4db5e-74e0-4641-a248-08368f4a1ae0)
+
+![Screenshot (174)](https://github.com/gsuni/VSD-Workshop/assets/99734954/cd66b1f1-7176-444a-9884-203665ed400e)
 
 Horizontal metal layer
 
-![10](https://github.com/gsuni/VSD-Workshop/assets/99734954/228ad26c-f036-487b-a8e4-020922edf89e)
+![Screenshot (177)](https://github.com/gsuni/VSD-Workshop/assets/99734954/8dccb0b9-86f2-42e3-9164-97eeb8e0eede)
 
 Vertical metal layer
 
-![11](https://github.com/gsuni/VSD-Workshop/assets/99734954/00a4f160-8a55-402d-b1f9-642cc0fd3f3a)
+![Screenshot (176)](https://github.com/gsuni/VSD-Workshop/assets/99734954/d9358163-e49f-4b6a-9384-4ee83c121067)
 
 To run the Placement, the command is
 ```bash
