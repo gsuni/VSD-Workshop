@@ -393,41 +393,46 @@ To do this we can copy the file using 'cp' comman
 OPENLANE :- Now we will go to the open lane directory and execute the docker command.
 
 Will Execute the following commands in a line
+```bash
+# Change directory to openlane flow directory
+cd Desktop/work/tools/openlane_working_dir/openlane
 
-#OPENLANE
-
-Now we will open openlane directry and run 'docker' command
-
+# alias docker='docker run -it -v $(pwd):/openLANE_flow -v $PDK_ROOT:$PDK_ROOT -e PDK_ROOT=$PDK_ROOT -u $(id -u $USER):$(id -g $USER) efabless/openlane:v0.21'
+# Since we have aliased the long command to 'docker' we can invoke the OpenLANE flow docker sub-system by just running this command
+docker
+# Now that we have entered the OpenLANE flow contained docker sub-system we can invoke the OpenLANE flow in the Interactive mode using the following command
 ./flow.tcl -interactive
 
+# Now that OpenLANE flow is open we have to input the required packages for proper functionality of the OpenLANE flow
 package require openlane 0.9
 
+# Now the OpenLANE flow is ready to run any design and initially we have to prep the design creating some necessary files and directories for running a specific design which in our case is 'picorv32a'
 prep -design picorv32a
 
+# Adiitional commands to include newly added lef to openlane flow
 set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
-
 add_lefs -src $lefs
 
+# Now that the design is prepped and ready, we can run synthesis using following command
 run_synthesis
+```
 
-prep -design picorv32a -tag 08-04_18-39 -overwrite
-
-set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
-
-add_lefs -src $lefs
+![Screenshot (633)](https://github.com/gsuni/VSD-Workshop/assets/99734954/24290733-3ba5-43d5-9faa-ee58183cfdba)
 
 
-![54](https://github.com/gsuni/VSD-Workshop/assets/99734954/5e2b59c5-6d17-4a94-9200-71405fa6358c)
+![Screenshot (634)](https://github.com/gsuni/VSD-Workshop/assets/99734954/89ed6def-0af1-45ec-a968-5f61a02c7dc5)
 
 
-![55](https://github.com/gsuni/VSD-Workshop/assets/99734954/9886d966-f429-4fa1-93e6-f90291defa73)
 
 
 ```bash
   run_synthesis
 ```
 
-![56](https://github.com/gsuni/VSD-Workshop/assets/99734954/de61c672-dd8d-4695-9788-5994d0684823)
+![Screenshot (635)](https://github.com/gsuni/VSD-Workshop/assets/99734954/21534ac3-d439-4052-9237-0c27e40b596a)
+
+
+![Screenshot (636)](https://github.com/gsuni/VSD-Workshop/assets/99734954/65420fd2-5c03-4e23-ac31-44bda7c0fc73)
 
 
 #adjusting synthesis parameters to incorporate vsdinv and fix slack
