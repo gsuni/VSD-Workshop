@@ -272,7 +272,6 @@ For doing DRC coorection we have to download lab files using
 ```
 
 
-
 To start magic tool,we can use command
 
 ```bash
@@ -281,56 +280,58 @@ To start magic tool,we can use command
 
 And we will open 'met3.mag' file
 
-![34](https://github.com/gsuni/VSD-Workshop/assets/99734954/7a1d604f-f9eb-46e1-a774-35334c353334)
+![Screenshot (610)](https://github.com/gsuni/VSD-Workshop/assets/99734954/d83f029a-908b-4314-abb3-d8adbbae68e2)
 
 We can see contact cuts using:
 ```bash
 cif see VIA2
 ```
-![35](https://github.com/gsuni/VSD-Workshop/assets/99734954/172d5019-7ed2-4135-8ac4-c08e112d6602)
+
+![Screenshot (613)](https://github.com/gsuni/VSD-Workshop/assets/99734954/c3e16fd4-dde0-4cf7-a3c3-ec3fcd8df7f9)
+
+![Screenshot (611)](https://github.com/gsuni/VSD-Workshop/assets/99734954/b0e2b398-bf4c-48f4-97fc-5ba02e6f01c5)
 
 # Fixing ploy.9 error
 
-![36](https://github.com/gsuni/VSD-Workshop/assets/99734954/eb327277-9a35-4416-8463-9e559402319f)
+![Screenshot (614)](https://github.com/gsuni/VSD-Workshop/assets/99734954/6743cc58-da78-4659-b049-ca82a815ca03)
 
 
-![37](https://github.com/gsuni/VSD-Workshop/assets/99734954/d2309835-f2e2-4975-bdcb-8c2e0dad564e)
+![Screenshot (615)](https://github.com/gsuni/VSD-Workshop/assets/99734954/2f3b76bc-df0d-411f-a9e8-6ef81df4edb9)
+
+
+![Screenshot (616)](https://github.com/gsuni/VSD-Workshop/assets/99734954/979cf75c-a5a2-4045-962f-b8eb30ebedac)
 
 Now we run `tech loadsky130A.tech`  and do drc check using `check drc`
 
 
-![38](https://github.com/gsuni/VSD-Workshop/assets/99734954/e2208a81-d333-4eec-bd15-20ff85cca63f)
+![Screenshot (618)](https://github.com/gsuni/VSD-Workshop/assets/99734954/5f0c984b-90f0-49df-89e5-59eb30b87e2a)
 
 
 #  Lab challenge exercise to describe DRC error as geometrical construct
 
 
 
-![39](https://github.com/gsuni/VSD-Workshop/assets/99734954/5c3b2e9c-ad36-4462-aed4-b216da7ea58f)
+![Screenshot (619)](https://github.com/gsuni/VSD-Workshop/assets/99734954/28217fd9-df91-41bb-aaad-b2fe6526383a)
 
 
 #Making some changes in sky130A.tech file
 
 
-![40](https://github.com/gsuni/VSD-Workshop/assets/99734954/dc5db316-348e-441f-8ad4-17778372b4fb)
+![Screenshot (620)](https://github.com/gsuni/VSD-Workshop/assets/99734954/6378a3c1-f455-43f8-a8e8-b04261de5849)
 
 
 
-![41](https://github.com/gsuni/VSD-Workshop/assets/99734954/17934f25-8a09-4628-8602-de3e7855de39)
+![Screenshot (621)](https://github.com/gsuni/VSD-Workshop/assets/99734954/04c1d150-a3a7-4b76-9d83-a542a56fc946)
 
 
 Now executing the command `drc style drc(full)` and `drc check`
 
 
-![42](https://github.com/gsuni/VSD-Workshop/assets/99734954/3eaba139-ea50-4a94-823d-70fb046729e9)
+![Screenshot (622)](https://github.com/gsuni/VSD-Workshop/assets/99734954/4899d316-d86f-4540-83a5-05319da71dd7)
 
 
 
-![43](https://github.com/gsuni/VSD-Workshop/assets/99734954/2dfd6cc3-7f17-4f19-911c-29d49ec8971d)
-
-
-
-![44](https://github.com/gsuni/VSD-Workshop/assets/99734954/71089d78-8c84-4514-8d5f-788408424c84)
+![Screenshot (623)](https://github.com/gsuni/VSD-Workshop/assets/99734954/f3cdf67b-4f38-491d-b2d2-254511fae825)
 
 DAY 4: Pre-layout timing analysis and importance of good clock tree
 
@@ -338,7 +339,9 @@ DAY 4: Pre-layout timing analysis and importance of good clock tree
 
 We can access the track file from the directory displayed in the picture to get additional details.
 
-![45](https://github.com/gsuni/VSD-Workshop/assets/99734954/29c218c2-cb08-43b0-931b-5580f4c69965)
+
+![Screenshot (625)](https://github.com/gsuni/VSD-Workshop/assets/99734954/202d0cc1-d237-43bd-b21a-d9c8279b33f3)
+
 
 The track, which is essentially a trace of metal layers like metal 1, metal 2, etc., is utilized during the routing stage.
 
@@ -349,23 +352,26 @@ The ports are located on the li1 layer in the layout. We must translate the grid
 We may accomplish this by opening the tracks file first, then the tkcon window and entering the help grid command.
 
 
-![46](https://github.com/gsuni/VSD-Workshop/assets/99734954/c5044940-e6b0-4c53-a8fa-64a75046a342)
+![Screenshot (624)](https://github.com/gsuni/VSD-Workshop/assets/99734954/74322a53-a987-4f82-85ec-2d02dff12d00)
 
 
-![47](https://github.com/gsuni/VSD-Workshop/assets/99734954/b761e50a-8868-48eb-acb1-3c663de941f1)
 
+![Screenshot (626)](https://github.com/gsuni/VSD-Workshop/assets/99734954/90e6a5e3-4933-46d8-b88c-9561a957dbce)
 
-![48](https://github.com/gsuni/VSD-Workshop/assets/99734954/a07beec5-ad25-4eb3-95bb-1077b049bf28)
 
 
 As we can see, the ports have been positioned near the track intersection. However, three boxes are covered in between the lines. Therefore, this also fits our second requirement.
 
 Lab steps to convert magic layout to std cell LEF
 
-![49](https://github.com/gsuni/VSD-Workshop/assets/99734954/da5659c0-108d-47be-9736-9e7b6740d227)
+![Screenshot (627)](https://github.com/gsuni/VSD-Workshop/assets/99734954/d1fb03b0-1e49-44ab-8292-6b0195b771ee)
 
 
-![500](https://github.com/gsuni/VSD-Workshop/assets/99734954/4cbd330f-3b32-4b2f-acb3-9174e0e086d3)
+![Screenshot (629)](https://github.com/gsuni/VSD-Workshop/assets/99734954/ca7fc2fa-1908-4576-8bf4-9398ef0ec985)
+
+
+![Screenshot (630)](https://github.com/gsuni/VSD-Workshop/assets/99734954/61bff31b-785f-4e35-9eb6-a8145448159a)
+
 
 
 now we will open this file in magic using
@@ -375,16 +381,14 @@ magic -T sky130A.tech sky130_vsdinv.mag &
 
 now we have to run command lef write in takon window to extarct the lef file
 
-![51](https://github.com/gsuni/VSD-Workshop/assets/99734954/ae281bbf-1aee-444a-935a-fd75a395a017)
+![Screenshot (631)](https://github.com/gsuni/VSD-Workshop/assets/99734954/7ea30992-8a2c-4eea-86a3-b44247d02f4f)
 
 we will need to move the files to the src folder where all design files are available.
 
 To do this we can copy the file using 'cp' comman
 
-![52](https://github.com/gsuni/VSD-Workshop/assets/99734954/c402c501-2783-4e7f-bf62-bad68b847130)
+![Screenshot (632)](https://github.com/gsuni/VSD-Workshop/assets/99734954/aa186324-86a4-4e8a-8c15-b42146bb5817)
 
-
-![53](https://github.com/gsuni/VSD-Workshop/assets/99734954/f0acf5fa-f6b3-4456-adb5-998af7c34879)
 
 OPENLANE :- Now we will go to the open lane directory and execute the docker command.
 
