@@ -216,27 +216,33 @@ To plot the graph between Voltage and time type the command in ngspice
 
 after running this file we get output of ngspice like this, 
 
-![28](https://github.com/gsuni/VSD-Workshop/assets/99734954/e61b3877-2583-40a8-bcd5-055d19e7e8fe)
+![Screenshot (599)](https://github.com/gsuni/VSD-Workshop/assets/99734954/2636d88d-7310-459c-a252-73e571620f76)
 
 
-![29](https://github.com/gsuni/VSD-Workshop/assets/99734954/4fdc0e53-9f97-4360-a9dc-1f57637cc238)
+![Screenshot (604)](https://github.com/gsuni/VSD-Workshop/assets/99734954/a2ab1ac3-7ef9-4f8c-a474-f06aacac25b8)
+
+
 
 -Increasing the value of C3 0.24ff to 2ff
 
-![30](https://github.com/gsuni/VSD-Workshop/assets/99734954/c301cd25-7812-4580-af9c-aab39b1a6c74)
+![Screenshot (605)](https://github.com/gsuni/VSD-Workshop/assets/99734954/65603680-7f6f-4da5-b0fc-63d90855f48c)
+
+
+![Screenshot (606)](https://github.com/gsuni/VSD-Workshop/assets/99734954/660ecfcc-80df-47c8-9368-acca644927a4)
+
 
 -#20%
 
-![31](https://github.com/gsuni/VSD-Workshop/assets/99734954/b27e5921-2924-44c1-99ec-d035fe259d64)
+![Screenshot (607)](https://github.com/gsuni/VSD-Workshop/assets/99734954/dde73b0f-1948-4280-a0c9-91abfd425a45)
 
 -#50%
 
-![33](https://github.com/gsuni/VSD-Workshop/assets/99734954/a95f64ea-a799-4d14-bb80-9d0edb6d9b6c)
+![Screenshot (609)](https://github.com/gsuni/VSD-Workshop/assets/99734954/85271b77-16f5-4325-a56b-3694e9440933)
 
 
 -#80%
 
-![32](https://github.com/gsuni/VSD-Workshop/assets/99734954/18bf4151-a39b-40cb-bb4c-757a2290693b)
+![Screenshot (608)](https://github.com/gsuni/VSD-Workshop/assets/99734954/aad970df-6aef-4855-b97d-3191635f5844)
 
 The value of parameters are:
 
@@ -265,7 +271,7 @@ For doing DRC coorection we have to download lab files using
    wget http://opencircuitdesign.com/open_pdks/archive/drc_tests.tgz
 ```
 
-![33](https://github.com/gsuni/VSD-Workshop/assets/99734954/495f11bb-7199-4ac2-bbfc-cf195b67bf94)
+
 
 To start magic tool,we can use command
 
