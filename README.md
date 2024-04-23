@@ -111,7 +111,9 @@ To run the Placement, the command is
 ```bash
 run_placement
 ```
-![12](https://github.com/gsuni/VSD-Workshop/assets/99734954/6be348b4-3c9a-4a90-aec4-c641feb66881)
+
+![Screenshot (178)](https://github.com/gsuni/VSD-Workshop/assets/99734954/14ed8aab-b2e0-46fb-9f54-2b344609ba9e)
+
 
 
 The Magic file to see actual view of standerd cells placement.And the actual view in the magic file is given below.  
@@ -123,42 +125,12 @@ The Magic file to see actual view of standerd cells placement.And the actual vie
 
 ![13](https://github.com/gsuni/VSD-Workshop/assets/99734954/91a6f682-352c-4e92-b096-3d1d32cff7cc)
 
-Screenshot of custom inverter inserted in placement def with proper abutment
 
-![14](https://github.com/gsuni/VSD-Workshop/assets/99734954/a991bf9f-d6bf-4145-8213-565d787e4252)
 
-- Vertical metal layer
-  
-![15](https://github.com/gsuni/VSD-Workshop/assets/99734954/b5fefa30-afe6-49be-921c-05268309dff3)
-
-- Horizontal metal layer
-  
-![16](https://github.com/gsuni/VSD-Workshop/assets/99734954/4a8a7b2c-4955-44df-8cd4-bc8eb80d83c2)
 
 DAY 3: Design library cell using Magic Layout and ngspice characterization
 
-#Modification of the fkloor plan
 
-```bash
-  set ::env(FP_IO_MODE) 2
-```
-
-```bash
-  run_floorplan
-```
-![17](https://github.com/gsuni/VSD-Workshop/assets/99734954/5356e411-9118-410a-947c-169856111802)
-
-![18](https://github.com/gsuni/VSD-Workshop/assets/99734954/9051d147-45af-4016-8817-b78ebb601b7d)
-
-```bash
-
-  magic -T /home/vsdsquadron/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged_unpadded.lef def read picorv32a.floorplan.def &
-
-```
-##Observed changed design
-As we can see the chandes has been made
-
-![19](https://github.com/gsuni/VSD-Workshop/assets/99734954/1b827994-8b64-4ccd-b1df-479af4885689)
 
 #Cloning inverter from github repository
 
@@ -168,7 +140,7 @@ Git clone the files from GitHub to your local pc
  git clone https://github.com/nickson-jose/vsdstdcelldesign.git
 ```
 
-![20](https://github.com/gsuni/VSD-Workshop/assets/99734954/add4dbf6-7b81-43e5-898c-b3e74b77eb49)
+
 
 open another terminal and go to the location
 
@@ -177,28 +149,28 @@ open another terminal and go to the location
 ```
 copy the sky130A.tech file from this location to the git cloned location.
 
-![21](https://github.com/gsuni/VSD-Workshop/assets/99734954/bb411192-e45c-4348-8f3e-19fc59d41c4f)
 
--Inverter layout
+![Screenshot (180)](https://github.com/gsuni/VSD-Workshop/assets/99734954/a0e190c2-60e7-42f2-8942-2cfa885747b8)
 
-![22](https://github.com/gsuni/VSD-Workshop/assets/99734954/df939863-508b-4192-9d95-e142a7ba711b)
 
 -Nmos
 
-![23](https://github.com/gsuni/VSD-Workshop/assets/99734954/9f1c5454-32c2-4ab9-92bc-18184d8543be)
+![Screenshot (181)](https://github.com/gsuni/VSD-Workshop/assets/99734954/151cfe81-92aa-4936-b90a-3aae7253a451)
 
 -Pmos
 
-![24](https://github.com/gsuni/VSD-Workshop/assets/99734954/dd29b7e3-57e3-407b-a856-e42bf454846b)
+![Screenshot (182)](https://github.com/gsuni/VSD-Workshop/assets/99734954/0a5b9f35-0796-4f68-9264-9beb281194ad)
 
 
-![25](https://github.com/gsuni/VSD-Workshop/assets/99734954/fb4cee8a-2974-424b-b46f-107a2f2b61b6)
+![Screenshot (184)](https://github.com/gsuni/VSD-Workshop/assets/99734954/b1576251-0c68-470f-bcce-1b6cfed8e5f6)
+
 
 #spice file
 
 let's see what is inside the spice file by "vim sky130_inv.spice".
 
-![26](https://github.com/gsuni/VSD-Workshop/assets/99734954/652446b5-952e-4d77-abe5-ca7d11c4e419)
+![Screenshot (186)](https://github.com/gsuni/VSD-Workshop/assets/99734954/c7ee2512-76bc-4396-81c5-da2691e5b6f4)
+
 
 #Modifing the file
 
@@ -230,7 +202,7 @@ endc
 end
 ```
 
-![27](https://github.com/gsuni/VSD-Workshop/assets/99734954/85805d7e-5a18-41cd-8486-5af4f665368a)
+![Screenshot (187)](https://github.com/gsuni/VSD-Workshop/assets/99734954/17d59a33-a8e6-46e1-9e3d-2d49668d0ffc)
 
 run the spice file in ngspice
 
