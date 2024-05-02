@@ -434,147 +434,469 @@ run_synthesis
 
 ![Screenshot (636)](https://github.com/gsuni/VSD-Workshop/assets/99734954/65420fd2-5c03-4e23-ac31-44bda7c0fc73)
 
+Commands to view and change parameters to improve timing and run synthesis
 
-#adjusting synthesis parameters to incorporate vsdinv and fix slack
+```tcl
 
-The README.MD file in the configuration directory will be changed.
+prep -design picorv32a -tag 24-03_10-03 -overwrite
 
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
 
-![57](https://github.com/gsuni/VSD-Workshop/assets/99734954/361977c0-b66b-46fe-abce-54937df15fb3)
+echo $::env(SYNTH_STRATEGY)
 
+set ::env(SYNTH_STRATEGY) "DELAY 3"
 
-Now we will run the following commands in openlane:
+echo $::env(SYNTH_BUFFERING)
 
+echo $::env(SYNTH_SIZING)
 
-`echo $::env(SYNTH_STRATEGY)`
+set ::env(SYNTH_SIZING) 1
 
-`set ::env(SYNTH_STRATEGY) "DELAY 3"`
+echo $::env(SYNTH_DRIVING_CELL)
 
-`echo $::env(SYNTH_BUFFERING)`
+run_synthesis
+```
+![Screenshot (8)](https://github.com/gsuni/VSD-Workshop/assets/99734954/b5bbd8a1-0032-47d4-a5c4-6f7c33d163f8)
 
-`echo $::env(SYNTH_SIZING)`
+![Screenshot (9)](https://github.com/gsuni/VSD-Workshop/assets/99734954/a0e547c0-f0e8-4bca-a560-27b36bd740cc)
 
-`set ::env(SYNTH_SIZING) 1`
+![Screenshot (10)](https://github.com/gsuni/VSD-Workshop/assets/99734954/0aa2852d-7b06-473e-bca6-498f65eb2c5f)
 
-`echo $::env(SYNTH_DRIVING_CELL)`
+Now that our custom inverter is properly accepted in synthesis we can now run floorplan using following command
 
-`run_synthesis`
+```tcl
+# Now we can run floorplan
+run_floorplan
+```
+![Screenshot (11)](https://github.com/gsuni/VSD-Workshop/assets/99734954/52b1a7a5-1f33-4aef-a3fa-82d2eae414d8)
 
+![Screenshot (12)](https://github.com/gsuni/VSD-Workshop/assets/99734954/25fc893c-b7a1-4e00-ac1c-0cdd92076a8f)
 
-![58](https://github.com/gsuni/VSD-Workshop/assets/99734954/490fd4b4-4a55-49f4-8b08-1b049d1ec94c)
+Since we are facing unexpected un-explainable error while using `run_floorplan` command, we can instead use the following set of commands
 
+```tcl
+init_floorplan
+place_io
+tap_decap_or
+```
+![Screenshot (13)](https://github.com/gsuni/VSD-Workshop/assets/99734954/81d32238-760a-489c-81c0-97b42f9f7e13)
+
+```tcl
+run_placement
+```
+![Screenshot (14)](https://github.com/gsuni/VSD-Workshop/assets/99734954/91152f6f-9e07-4f8f-aa23-1f36bac7e76c)
+
+![Screenshot (15)](https://github.com/gsuni/VSD-Workshop/assets/99734954/9fe358c4-601a-4981-9065-1bcd83642278)
+
+Abutment of power pins with other cell from library clearly visible
+
+![Screenshot (16)](https://github.com/gsuni/VSD-Workshop/assets/99734954/128022f6-dd03-437e-9381-a6463a4486aa)
+
+ Post-Synthesis timing analysis with OpenSTA tool.
+
+ Commands to invoke the OpenLANE flow include new lef and perform synthesis 
 
 ```bash
- run_synthesis
+cd Desktop/work/tools/openlane_working_dir/openlane
+docker
+```
+```tcl
+./flow.tcl -interactive
+
+package require openlane 0.9
+
+prep -design picorv32a
+
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+set ::env(SYNTH_SIZING) 1
+
+run_synthesis
+```
+![Screenshot (17)](https://github.com/gsuni/VSD-Workshop/assets/99734954/d8a74e2b-e485-4c55-950c-2730ec9be756)
+
+Newly created `pre_sta.conf` for STA analysis
+
+![Screenshot (18)](https://github.com/gsuni/VSD-Workshop/assets/99734954/190c7652-497a-451b-99b4-d1117bd5c3e3)
+
+Newly created `my_base.sdc` for STA analysis in `openlane/designs/picorv32a/src` directory
+
+![Screenshot (19)](https://github.com/gsuni/VSD-Workshop/assets/99734954/24e34126-cbee-4738-9b37-e6494ded378d)
+
+
+Commands to run STA in another terminal
+```bash
+cd Desktop/work/tools/openlane_working_dir/openlane
+
+sta pre_sta.conf
+```
+![Screenshot (21)](https://github.com/gsuni/VSD-Workshop/assets/99734954/1f5f3575-3e32-40b3-b968-b77060e114e5)
+
+![Screenshot (22)](https://github.com/gsuni/VSD-Workshop/assets/99734954/267c7bbf-96f9-4564-9aec-b51c87606cf7)
+
+Since more fanout is causing more delay we can add parameter to reduce fanout and do synthesis again
+
+Commands to include new lef and perform synthesis 
+
+```tcl
+prep -design picorv32a -tag 30-04_05-57 -overwrite
+
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+set ::env(SYNTH_SIZING) 1
+
+set ::env(SYNTH_MAX_FANOUT) 4
+
+echo $::env(SYNTH_DRIVING_CELL)
+
+run_synthesis
 ```
 
-![59](https://github.com/gsuni/VSD-Workshop/assets/99734954/0fcf07c7-c998-4e21-a93c-80186e45b1fd)
+![Screenshot (23)](https://github.com/gsuni/VSD-Workshop/assets/99734954/0ffedcbd-1ba8-49d9-9de9-c1885856b685)
 
-
-![60](https://github.com/gsuni/VSD-Workshop/assets/99734954/02b760e2-b44b-4adf-907a-b762bfdf68a9)
-
-#To resolve the issue
-
-'init_floorplan'
-
-'place_io'
-
-'tap_decap_or'
-
-![61](https://github.com/gsuni/VSD-Workshop/assets/99734954/e04ec5b9-80a4-4480-9a0c-f18e5275d41c)
-
-
-![62](https://github.com/gsuni/VSD-Workshop/assets/99734954/6728d03c-4643-4f6e-8615-eeffe1a42f97)
-
-
-![63](https://github.com/gsuni/VSD-Workshop/assets/99734954/383d8bb4-3f3e-409d-8473-cb06d49b62b2)
-
-
-Now that errors have been successfully fixed, the 'run_placement' command is being used.
-
-
-![64](https://github.com/gsuni/VSD-Workshop/assets/99734954/dffeee1e-d709-4a39-b2db-e7bdae083777)
+![Screenshot (24)](https://github.com/gsuni/VSD-Workshop/assets/99734954/c3073bbe-a78d-4bf6-b4a5-b97e9276e443)
 
 ```bash
-  
-   magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged_unpadded.lef def read picorv32a.floorplan.def &
+cd Desktop/work/tools/openlane_working_dir/openlane
+
+sta pre_sta.conf
+```
+![Screenshot (25)](https://github.com/gsuni/VSD-Workshop/assets/99734954/a5137935-52ab-4c4c-abcd-009369b932fe)
+
+
+Commands to perform analysis and optimize timing by replacing with OR gate of drive strength 4
+
+```tcl
+report_net -connections _11672_
+
+help replace_cell
+
+replace_cell _14510_ sky130_fd_sc_hd__or3_4
+
+report_checks -fields {net cap slew input_pins} -digits 4
+```
+![Screenshot (26)](https://github.com/gsuni/VSD-Workshop/assets/99734954/01353eca-1298-434c-abf0-48d47849d594)
+
+
+![Screenshot (27)](https://github.com/gsuni/VSD-Workshop/assets/99734954/a236e115-0f4a-4b37-a6f6-e670ee69e5dd)
+
+Commands to perform analysis and optimize timing by replacing with OR gate of drive strength 4
+
+```tcl
+report_net -connections _11675_
+
+replace_cell _14514_ sky130_fd_sc_hd__or3_4
+
+report_checks -fields {net cap slew input_pins} -digits 4
 ```
 
-![65](https://github.com/gsuni/VSD-Workshop/assets/99734954/aaf63fc9-0731-4044-a23f-23533b897918)
+![Screenshot (28)](https://github.com/gsuni/VSD-Workshop/assets/99734954/0af8c054-cb7f-44ad-98c1-85bf4673ee62)
 
 
-#placement output in magic
+![Screenshot (29)](https://github.com/gsuni/VSD-Workshop/assets/99734954/48ade5a0-3040-4d68-a68f-0c9d6e9293d9)
 
-![66](https://github.com/gsuni/VSD-Workshop/assets/99734954/31c5ce3a-6a4b-41a8-a7f1-81f1b767f5d7)
+Commands to perform analysis and optimize timing by replacing with OR gate of drive strength 4
 
+```tcl
+report_net -connections _11643_
 
-To view internal layers we need to run command 'expand' in tckon tab
+replace_cell _14481_ sky130_fd_sc_hd__or4_4
 
-![67](https://github.com/gsuni/VSD-Workshop/assets/99734954/3981813b-76bf-46a3-8d86-10a8bcc68c59)
-
-
-# DAY 5:  Final steps for RTL2GDS using tritonRoute and openST
-
-#performng PDN generation and layout
-
- Building power distribution network
-
-` docker`
-
-`./flow.tcl -interactive`
-
-`package require openlane 0.9`
-
-`prep -design picorv32a -tag 08-04_18-39`
-
-`echo $::env(CURRENT_DEF)`
-
-
-![68](https://github.com/gsuni/VSD-Workshop/assets/99734954/f6775d09-c63f-4784-ba9f-bcab011a551b)
-
-
-![69](https://github.com/gsuni/VSD-Workshop/assets/99734954/6007df83-41f2-4177-a373-715060196981)
-
-
-#Generating pdn(power distribution network) using `gen_pdn`
-
-
-![70](https://github.com/gsuni/VSD-Workshop/assets/99734954/ad2d6966-9b24-4683-ae67-d89eb93afed5)
-
-
-#Routing
-
- Running `echo $::env(CURRENT_DEF)` and ` echo $::env(ROUTING_STRATEGY)`
- 
- 
-![71](https://github.com/gsuni/VSD-Workshop/assets/99734954/4738d6dc-9b85-472a-bb61-25a4842a7082)
-
-
- ```bash
-   run_routing
+report_checks -fields {net cap slew input_pins} -digits 4
 ```
 
-![72](https://github.com/gsuni/VSD-Workshop/assets/99734954/86e194b5-57f3-452f-bdfd-1a3215ff409b)
+![Screenshot (30)](https://github.com/gsuni/VSD-Workshop/assets/99734954/1eea471d-d726-4011-8cb1-6c9134c17b05)
 
 
-OpenLANE lacks a SPEF extraction tool, hence this procedure must be completed externally to OpenLANE.
+![Screenshot (31)](https://github.com/gsuni/VSD-Workshop/assets/99734954/bb5e407d-a035-4b24-8b05-65ad51fe6276)
 
-You may find the generated.spef file in the routing folder, which is situated beneath the results folder.
+Commands to perform analysis and optimize timing by replacing with OR gate of drive strength 4
+
+```tcl
+report_net -connections _11668_
+
+replace_cell _14506_ sky130_fd_sc_hd__or4_4
+
+report_checks -fields {net cap slew input_pins} -digits 4
+```
+
+![Screenshot (32)](https://github.com/gsuni/VSD-Workshop/assets/99734954/213718d8-4d6c-4b65-b924-3758d00908d9)
+
+![Screenshot (33)](https://github.com/gsuni/VSD-Workshop/assets/99734954/1bb69221-9207-4c26-9500-03255e0320db)
+
+```tcl
+report_checks -from _29043_ -to _30440_ -through _14506_
+```
+
+![Screenshot (34)](https://github.com/gsuni/VSD-Workshop/assets/99734954/cbe68ba7-be97-4578-9367-08c1582ac9b7)
+
+![Screenshot (35)](https://github.com/gsuni/VSD-Workshop/assets/99734954/c773df43-2425-4be0-a5a0-0b8fd8bca221)
+
+Replace the old netlist with the new netlist generated after timing ECO fix and implement the floorplan, placement and cts.
+
+Commands to make copy of netlist
+
+```bash
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/30-04_05-57/results/synthesis/
+
+cp picorv32a.synthesis.v picorv32a.synthesis_old.v
+```
+
+![Screenshot (36)](https://github.com/gsuni/VSD-Workshop/assets/99734954/ae662513-0eb1-4942-8b31-4d6aba0fcff3)
+
+Commands to write verilog
+
+```tcl
+help write_verilog
+
+write_verilog /home/vsduser/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-03_18-52/results/synthesis/picorv32a.synthesis.v
+
+exit
+```
+
+![Screenshot (37)](https://github.com/gsuni/VSD-Workshop/assets/99734954/d61605d8-7f11-4316-a28b-8ed66e9c2c5e)
+
+Commands load the design and run necessary stages
+
+```tcl
+prep -design picorv32a -tag 30-04_05-57 -overwrite
+
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+set ::env(SYNTH_STRATEGY) "DELAY 3"
+
+set ::env(SYNTH_SIZING) 1
+
+run_synthesis
+
+init_floorplan
+place_io
+tap_decap_or
+
+run_placement
+
+unset ::env(LIB_CTS)
+
+run_cts
+```
+![Screenshot (38)](https://github.com/gsuni/VSD-Workshop/assets/99734954/733440ed-369e-4a53-9f80-471c83b54610)
 
 
-![73](https://github.com/gsuni/VSD-Workshop/assets/99734954/423e281a-cd3e-4c71-855a-0c6485d5f396)
+![Screenshot (39)](https://github.com/gsuni/VSD-Workshop/assets/99734954/789b99a9-21f1-4ba6-9308-9e089b4afb45)
 
 
-![74](https://github.com/gsuni/VSD-Workshop/assets/99734954/2a5455b3-341d-48ad-952a-f046af231835)
+![Screenshot (40)](https://github.com/gsuni/VSD-Workshop/assets/99734954/928f7552-b166-45f4-badd-f600b5cbadb9)
 
 
-#Final layout
-    
-
-![75](https://github.com/gsuni/VSD-Workshop/assets/99734954/8dd2a87d-aea5-42f0-83b4-3138ce2349c8)
+![Screenshot (41)](https://github.com/gsuni/VSD-Workshop/assets/99734954/e5815adc-c337-4057-bfcd-f2cb0d2b68b8)
 
 
+![Screenshot (42)](https://github.com/gsuni/VSD-Workshop/assets/99734954/ee50358e-f594-407a-8649-2d2ef9b0ed2b)
+
+Post-CTS OpenROAD timing analysis.
+
+Commands to be run in OpenLANE flow to do OpenROAD timing analysis with integrated OpenSTA in OpenROAD
+
+```tcl
+openroad
+
+read_lef /openLANE_flow/designs/picorv32a/runs/30-04_05-57/tmp/merged.lef
+
+read_def /openLANE_flow/designs/picorv32a/runs/30-04_05-57/results/cts/picorv32a.cts.def
+
+write_db pico_cts.db
+
+read_db pico_cts.db
+
+read_verilog /openLANE_flow/designs/picorv32a/runs/30-04_05-57/results/synthesis/picorv32a.synthesis_cts.v
+
+read_liberty $::env(LIB_SYNTH_COMPLETE)
+
+link_design picorv32a
+
+read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
+
+set_propagated_clock [all_clocks]
+
+help report_checks
+
+report_checks -path_delay min_max -fields {slew trans net cap input_pins} -format full_clock_expanded -digits 4
+
+exit
+```
+
+![Screenshot (43)](https://github.com/gsuni/VSD-Workshop/assets/99734954/cc690545-64e3-4161-a219-abb53b2c492e)
+
+![Screenshot (44)](https://github.com/gsuni/VSD-Workshop/assets/99734954/d2014418-23fc-4e53-a3d0-4960944d101e)
 
 
 
+Commands to be run in OpenLANE flow to do OpenROAD timing analysis after changing `CTS_CLK_BUFFER_LIST`
+
+```tcl
+echo $::env(CTS_CLK_BUFFER_LIST)
+
+set ::env(CTS_CLK_BUFFER_LIST) [lreplace $::env(CTS_CLK_BUFFER_LIST) 0 0]
+
+echo $::env(CTS_CLK_BUFFER_LIST)
+
+echo $::env(CURRENT_DEF)
+
+set ::env(CURRENT_DEF) /openLANE_flow/designs/picorv32a/runs/30-04_05-57/results/placement/picorv32a.placement.def
+
+run_cts
+
+echo $::env(CTS_CLK_BUFFER_LIST)
+
+openroad
+
+read_lef /openLANE_flow/designs/picorv32a/runs/30-04_05-57/tmp/merged.lef
+
+read_def /openLANE_flow/designs/picorv32a/runs/30-04_05-57/results/cts/picorv32a.cts.def
+
+write_db pico_cts1.db
+
+read_db pico_cts.db
+
+read_verilog /openLANE_flow/designs/picorv32a/runs/30-04_05-57/results/synthesis/picorv32a.synthesis_cts.v
+
+read_liberty $::env(LIB_SYNTH_COMPLETE)
+
+link_design picorv32a
+
+read_sdc /openLANE_flow/designs/picorv32a/src/my_base.sdc
+
+set_propagated_clock [all_clocks]
+
+report_checks -path_delay min_max -fields {slew trans net cap input_pins} -format full_clock_expanded -digits 4
+
+report_clock_skew -hold
+
+report_clock_skew -setup
+
+exit
+
+echo $::env(CTS_CLK_BUFFER_LIST)
+
+set ::env(CTS_CLK_BUFFER_LIST) [linsert $::env(CTS_CLK_BUFFER_LIST) 0 sky130_fd_sc_hd__clkbuf_1]
+
+echo $::env(CTS_CLK_BUFFER_LIST)
+```
+
+![Screenshot (45)](https://github.com/gsuni/VSD-Workshop/assets/99734954/4308de18-52d0-419f-86d3-55617fcc32ce)
+
+
+![Screenshot (46)](https://github.com/gsuni/VSD-Workshop/assets/99734954/4818470b-a488-4963-b3f2-6f50ff888182)
+
+
+![Screenshot (47)](https://github.com/gsuni/VSD-Workshop/assets/99734954/d7fc5157-df30-45ef-a962-94aacd0817af)
+
+
+![Screenshot (48)](https://github.com/gsuni/VSD-Workshop/assets/99734954/94b30be7-55cc-4cd7-aff7-37300bcb30dc)
+
+
+Day 5 - Final steps for RTL2GDS using tritonRoute and openSTA
+
+Perform generation of Power Distribution Network (PDN) and explore the PDN layout.
+
+Commands to perform all necessary stages up until now
+
+```bash
+cd Desktop/work/tools/openlane_working_dir/openlane
+
+docker
+```
+
+```tcl
+./flow.tcl -interactive
+
+package require openlane 0.9
+
+prep -design picorv32a
+
+set lefs [glob $::env(DESIGN_DIR)/src/*.lef]
+add_lefs -src $lefs
+
+set ::env(SYNTH_STRATEGY) "DELAY 3"
+
+set ::env(SYNTH_SIZING) 1
+
+run_synthesis
+
+init_floorplan
+place_io
+tap_decap_or
+
+run_placement
+
+run_cts
+
+gen_pdn 
+```
+
+![Screenshot (49)](https://github.com/gsuni/VSD-Workshop/assets/99734954/88bfea04-7871-43a8-8497-c47bfe2ec6b9)
+
+
+![Screenshot (50)](https://github.com/gsuni/VSD-Workshop/assets/99734954/71896aa4-506f-435b-a6fd-7f323f5ca505)
+
+
+![Screenshot (51)](https://github.com/gsuni/VSD-Workshop/assets/99734954/a06ef2b4-25dd-4e54-b155-84f904a66dec)
+
+Commands to load PDN def in magic in another terminal
+
+```bash
+
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/02-05_04-43/tmp/floorplan/
+
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read 14-pdn.def &
+```
+
+![Screenshot (52)](https://github.com/gsuni/VSD-Workshop/assets/99734954/ae69c47e-b40e-40db-a986-c7929ae6e750)
+
+
+![Screenshot (53)](https://github.com/gsuni/VSD-Workshop/assets/99734954/5a7b4043-9597-47d6-9c3c-baa104b1d83f)
+
+Command to perform routing
+
+```bash
+echo $::env(CURRENT_DEF)
+
+echo $::env(ROUTING_STRATEGY)
+
+run_routing
+```
+
+![Screenshot (54)](https://github.com/gsuni/VSD-Workshop/assets/99734954/a77eaa37-e345-4866-9f3b-4f14946ed390)
+
+Commands to load routed def in magic in another terminal
+
+```bash
+cd Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/02-05_04-43/results/routing/
+
+magic -T /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.def &
+```
+
+![Screenshot (55)](https://github.com/gsuni/VSD-Workshop/assets/99734954/aeb1a92c-1936-4199-9536-3556b5bea682)
+
+
+![Screenshot (56)](https://github.com/gsuni/VSD-Workshop/assets/99734954/9089dc0e-c99c-4541-a5a5-1f8be808589e)
+
+
+![Screenshot (57)](https://github.com/gsuni/VSD-Workshop/assets/99734954/efffcc03-aa69-437d-be60-8f3669280543)
+
+
+Screenshot of fast route guide
+
+
+![Screenshot (58)](https://github.com/gsuni/VSD-Workshop/assets/99734954/7e745912-b94c-4ecd-ac6d-1b6cf69bc61c)
+
+
+This is the final generated layout
+
+
+![Screenshot (59)](https://github.com/gsuni/VSD-Workshop/assets/99734954/87843918-793c-4cb1-a799-5caaf46a9ea7)
 
